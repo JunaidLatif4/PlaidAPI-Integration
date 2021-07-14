@@ -29,7 +29,6 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
 
 // MongoDB Connection :
-// mongoose.connect('mongodb://localhost:27017/users?authSource=admin', { user: "root", pass: "example", useNewUrlParser: true })
 mongoose.connect('mongodb://localhost:27017/plaid', { useNewUrlParser: true, useUnifiedTopology: true })
 const db = mongoose.connection;
 
@@ -79,19 +78,19 @@ db.once('open', () => {
     }
   });
 
-  app.post('/get_access_token' , async (req , res)=>{
+  app.post('/get_access_token', async (req, res) => {
     let { public_token } = req.body
 
-    const access_token = await client.exchangePublicToken(public_token , (err , res)=>{
-      if (err){
-        return res.json({ERROR : "EXCHANGING TOKEN FAILED"})
+    const access_token = await client.exchangePublicToken(public_token, (err, res) => {
+      if (err) {
+        return res.json({ ERROR: "EXCHANGING TOKEN FAILED" })
       }
 
 
-      
+
     })
 
-    console.log("The RES From EXCHANGETOKEN ==== " , access_token)
+    console.log("The RES From EXCHANGETOKEN ==== ", access_token)
 
   })
 
@@ -101,42 +100,3 @@ db.once('open', () => {
   );
 
 })
-
-
-
-
-
-// app.post('/plaid_token_exchange', async (req, res) => {
-//   const { publicToken } = req.body;
-
-//   const { access_token } = await client.exchangePublicToken(publicToken).catch(handleError);
-//   const { accounts, item } = await client.getAccounts(access_token).catch(handleError)
-
-//   console.log({
-//     accounts,
-//     item
-//   })
-// })
-
-// app.post('/create_link_token', async (request, response) => {
-//   try {
-//     // Get the client_user_id by searching for the current user
-//     //   const user = await User.find(...);
-//     const clientUserId = "45";
-//     // Create the link_token with all of your configurations
-//     const tokenResponse = await client.createLinkToken({
-//       user: {
-//         client_user_id: clientUserId,
-//       },
-//       client_name: 'Junaid',
-//       products: ["auth"],
-//       country_codes: ['US'],
-//       language: 'en',
-//       webhook: 'https://webhook.sample.com',
-//     });
-//     response.json(tokenResponse);
-//   } catch (e) {
-//     // Display error on client
-//     return response.send({ error: e.message });
-//   }
-// });
