@@ -13,7 +13,7 @@ const PlaidAPI = () => {
     pass: ""
   })
 
-  const [link_token, setLinkToken] = useState("link-sandbox-d2c55cba-bf02-4539-aeaa-dd56d8486486")
+  const [link_token, setLinkToken] = useState("link-sandbox-75d78a90-1f16-4a31-b0c4-90358f0eb4a8")
 
   const enteringUser = (event) => {
 
@@ -29,7 +29,7 @@ const PlaidAPI = () => {
 
   const submit = async (data) => {
     data.preventDefault();
-    let url = "http://localhost:8080/register/";
+    let url = "http://localhost:9090/register/";
     let email = user.email;
     let pass = user.pass
 
@@ -42,7 +42,7 @@ const PlaidAPI = () => {
 
   const createlinktoken = async () => {
     console.log("CKICKED!!!!!!!")
-    let url = "http://localhost:8080/create_link_token";
+    let url = "http://localhost:9090/create_link_token";
 
     axios.post(url).then((res) => {
       console.log(res)
@@ -55,9 +55,9 @@ const PlaidAPI = () => {
     console.log("The PublicToken ========= " , public_token)
     console.log("The PublicToken's DATA ========= " , data)
 
-    let url = "http://localhost:8080/create_link_token";
+    let url = "http://localhost:9090/get_access_token";
 
-    axios.post(url).then((res) => {
+    axios.post(url , {public_token:public_token}).then((res) => {
       console.log(res)
     }).catch((err) => {
       console.log("Something Went Wrong CREATE LINK TOKEN == ", err)

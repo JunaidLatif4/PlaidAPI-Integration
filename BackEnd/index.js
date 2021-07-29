@@ -79,24 +79,20 @@ db.once('open', () => {
   });
 
   app.post('/get_access_token', async (req, res) => {
+    console.log("=========== EXCHANGE ACCESS TOKEN ============= ", req)
     let { public_token } = req.body
 
-    const access_token = await client.exchangePublicToken(public_token, (err, res) => {
-      if (err) {
-        return res.json({ ERROR: "EXCHANGING TOKEN FAILED" })
-      }
-
-
-
-    })
+    const access_token = await client.exchangePublicToken(public_token)
 
     console.log("The RES From EXCHANGETOKEN ==== ", access_token)
+
+    res.json({ ERROR: "NO ERROR", AccessToken: access_token })
 
   })
 
 
 
-  app.listen(8080, () => console.log("Server is Started at localhost:8080 ")
+  app.listen(9090, () => console.log("Server is Started at localhost:8080 ")
   );
 
 })
